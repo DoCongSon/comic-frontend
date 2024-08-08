@@ -1,4 +1,9 @@
+import { Metadata } from 'next'
 import NavbarSetting from './navbar-setting'
+
+export const metadata: Metadata = {
+  title: 'Settings',
+}
 
 const SettingLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (

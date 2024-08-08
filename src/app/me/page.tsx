@@ -10,10 +10,6 @@ import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Me',
-}
-
 const MePage = () => {
   const [progress, setProgress] = useState(0)
   const { user } = useAppContext()

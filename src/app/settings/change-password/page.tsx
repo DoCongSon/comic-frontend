@@ -18,10 +18,6 @@ import authApiRequest from '@/apiRequests/auth'
 import { toast } from 'sonner'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Change password',
-}
-
 const ChangePasswordPage = () => {
   const { user } = useAppContext()
   const [loading, setLoading] = useState(false)

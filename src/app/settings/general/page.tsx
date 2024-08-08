@@ -15,10 +15,6 @@ import userApiRequest from '@/apiRequests/user'
 import { toast } from 'sonner'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'General',
-}
-
 const GeneralPage = () => {
   const { user, setUser } = useAppContext()
   const [loading, setLoading] = useState(false)

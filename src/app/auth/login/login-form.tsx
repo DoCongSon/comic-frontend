@@ -90,7 +90,7 @@ const LoginForm = () => {
 
   const handleLoginWithGoogle = async () => {
     window.open(
-      `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/auth/google?return=http://localhost:3001/auth/login?redirectFrom=google`,
+      `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/auth/google?return=${envConfig.NEXT_PUBLIC_URL}/auth/login?redirectFrom=google`,
       '_self'
     )
   }

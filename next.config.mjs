@@ -1,4 +1,19 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.otruyenapi.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sv1.otruyencdn.com',
+        port: '',
+      },
+    ],
+  },
+}
 
-export default nextConfig;
+export default nextConfig

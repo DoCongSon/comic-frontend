@@ -7,9 +7,11 @@ import {
   TokensType,
 } from '@/schemaValidations/auth.schema'
 import { MessageResType } from '@/schemaValidations/common.schema'
+import { ChangePasswordBodyType, UpdateProfileBodyType } from '@/schemaValidations/user.schema'
+import { Changa } from 'next/font/google'
 
 const authApiRequest = {
-  login: (body: LoginBodyType) => http.post<LoginResType>('/auth/login', body),
+  login: (body: LoginBodyType) => http.post<Omit<LoginResType, 'remember'>>('/auth/login', body),
   register: (body: RegisterBodyType) => http.post<RegisterResType>('/auth/register', body),
   auth: (body: TokensType | null) =>
     http.post('/api/auth', body, {
@@ -27,7 +29,8 @@ const authApiRequest = {
         signal,
       }
     ),
-  refreshToken: (refreshToken: string) => http.post<TokensType>('/auth/refreshToken', { refreshToken }),
+  refreshToken: (refreshToken: string) => http.post<TokensType>('/auth/refresh-tokens', { refreshToken }),
+  ChangePassword: (body: ChangePasswordBodyType) => http.post<null>('/auth/change-password', body),
 }
 
 export default authApiRequest

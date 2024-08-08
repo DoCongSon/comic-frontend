@@ -11,25 +11,29 @@ export const UserRes = z
     history: z.array(z.string()),
     saved: z.array(z.string()),
     likes: z.array(z.string()),
-    process: z.object({
+    progress: z.object({
       level: z.number(),
       levelName: z.string(),
       points: z.number(),
       ruby: z.number(),
-      achievements: z.array(z.string()),
+      achievements: z.array(z.object({ id: z.string(), name: z.string(), description: z.string() })),
     }),
   })
   .strict()
 
 export type UserResType = z.TypeOf<typeof UserRes>
 
-export const UpdateMeBody = z.object({
+export const ChangePasswordBody = z.object({
+  oldPassword: z.string().min(6).max(256),
+  newPassword: z.string().min(6).max(256),
+})
+
+export type ChangePasswordBodyType = z.TypeOf<typeof ChangePasswordBody>
+
+export const UpdateProfileBody = z.object({
   name: z.string().trim().min(2).max(256).optional(),
   email: z.string().email().optional(),
   avatar: z.string().url().optional(),
-  history: z.array(z.string()).optional(),
-  saved: z.array(z.string()).optional(),
-  likes: z.array(z.string()).optional(),
 })
 
-export type UpdateMeBodyType = z.TypeOf<typeof UpdateMeBody>
+export type UpdateProfileBodyType = z.TypeOf<typeof UpdateProfileBody>

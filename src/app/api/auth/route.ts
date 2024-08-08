@@ -2,7 +2,6 @@ import { TokensType } from '@/schemaValidations/auth.schema'
 
 export async function POST(request: Request) {
   const body: TokensType | null = await request.json()
-  console.log('🚀 ~ body:', body)
   if (!body) {
     return Response.json(
       { message: 'Không nhận được session token' },

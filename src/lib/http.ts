@@ -83,14 +83,16 @@ const request = async <Response>(
     body,
     method,
   })
-  const payload: Response = await res.json()
+
+  let payload: Response = null as any
+  if (res.status !== 204) payload = await res.json()
+
   const data = {
     status: res.status,
     payload,
   }
   // Interceptor là nời chúng ta xử lý request và response trước khi trả về cho phía component
   if (!res.ok) {
-    console.log('data', data)
     if (res.status === ENTITY_ERROR_STATUS) {
       throw new HttpError(data)
       // throw new EntityError(

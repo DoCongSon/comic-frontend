@@ -19,6 +19,7 @@ export default function RefreshToken() {
         }
         const response = await authApiRequest.refreshToken(sessionTokens.refresh.token)
         localStorage.setItem('sessionTokens', JSON.stringify(response.payload))
+        await authApiRequest.auth(response.payload)
       }
     }, 1000 * 60 * 5)
     return () => clearInterval(interval)

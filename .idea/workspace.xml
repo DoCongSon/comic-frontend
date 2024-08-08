@@ -4,7 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7de43be-1b90-4bb3-bfd2-3a6f76ac803a" name="Changes" comment="" />
+    <list default="true" id="e7de43be-1b90-4bb3-bfd2-3a6f76ac803a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/comics/[slug]/chapters/[id]/chapter-content.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/comics/[slug]/chapters/[id]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/comics/[slug]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/search/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/settings/change-password/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/settings/general/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/settings/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/settings/navbar-setting.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apiRequests/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apiRequests/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apiRequests/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apiRequests/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/auth/logout/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/logout/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/login/login-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/login/login-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/register/register-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/register/register-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/me/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/me/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/logout-button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/refresh-token.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/refresh-token.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/input.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/http.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemaValidations/auth.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemaValidations/auth.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemaValidations/user.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemaValidations/user.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,10 +42,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "DoCongSon"
+  }
 }]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/DoCongSon/comic-frontend.git",
+    "accountId": "3cf67c46-d9c8-45e2-9e38-e2a5d04517b1"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2jiafNJMQGg9ynDLKdAjXgMH1uy" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="openDirectoriesWithSingleClick" value="true" />
@@ -24,6 +68,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
@@ -36,6 +81,14 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+      </map>
+    </option>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -52,10 +105,14 @@
       <option name="presentableId" value="Default" />
       <updated>1721872455312</updated>
       <workItem from="1721872456464" duration="628000" />
+      <workItem from="1722669483293" duration="159000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

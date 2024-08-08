@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,38 +15,70 @@ import { toast } from 'sonner'
 import userApiRequest from '@/apiRequests/user'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useAppContext } from '@/app/app-provider'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import envConfig from '@/config'
+import { PasswordInput } from '@/components/ui/password-input'
+import { Checkbox, type CheckedState } from '@/components/ui/checkbox'
 
 const LoginForm = () => {
+  const [googleLoading, setGoogleLoading] = useState(false)
   const [loading, setLoading] = useState(false)
   const { setUser } = useAppContext()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirectFrom = searchParams.get('redirectFrom')
+
+  useEffect(() => {
+    ;(async () => {
+      if (redirectFrom === 'google') {
+        const refreshToken = Cookies.get('auth')
+        if (refreshToken) {
+          setGoogleLoading(true)
+          const response = await authApiRequest.refreshToken(refreshToken)
+          localStorage.setItem('sessionTokens', JSON.stringify(response.payload))
+          await authApiRequest.auth(response.payload)
+          const me = await userApiRequest.me()
+          setUser(me.payload)
+          router.push('/me')
+          router.refresh()
+          Cookies.remove('auth')
+          toast.success('Login with Google successfully')
+          setGoogleLoading(false)
+        }
+      }
+    })()
+  }, [redirectFrom, router, setUser])
 
   // 1. Define your form.
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
     defaultValues: {
-      email: '',
-      password: '',
+      email: localStorage.getItem('email') || '',
+      password: localStorage.getItem('password') || '',
+      remember: !!localStorage.getItem('email'),
     },
   })
 
   // 2. Define a submit handler.
-  const onSubmit = async (values: LoginBodyType) => {
+  const onSubmit = async ({ email, password, remember }: LoginBodyType) => {
     if (loading) return
+    if (remember) {
+      localStorage.setItem('email', email)
+      localStorage.setItem('password', password)
+    } else {
+      localStorage.removeItem('email')
+      localStorage.removeItem('password')
+    }
     try {
       setLoading(true)
-      const result = await authApiRequest.login(values)
+      const result = await authApiRequest.login({ email, password })
       await authApiRequest.auth(result.payload)
-      const me = await userApiRequest.me(result.payload.access.token)
+      const me = await userApiRequest.me()
       setUser(me.payload)
       router.push('/me')
       router.refresh()
       toast.success('Login successfully')
     } catch (error) {
-      console.log('🚀 ~ error:', error)
-
       handleErrorApi({
         error,
         setError: form.setError,
@@ -53,13 +86,13 @@ const LoginForm = () => {
     } finally {
       setLoading(false)
     }
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
   }
 
   const handleLoginWithGoogle = async () => {
-    window.open(`${envConfig.NEXT_PUBLIC_API_ENDPOINT}/auth/google?return=http://localhost:3000/auth/login`, '_self')
+    window.open(
+      `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/auth/google?return=http://localhost:3001/auth/login?redirectFrom=google`,
+      '_self'
+    )
   }
 
   return (
@@ -90,17 +123,36 @@ const LoginForm = () => {
                 </Link>
               </div>
               <FormControl>
-                <Input autoComplete='current-password' type='password' {...field} />
+                <PasswordInput autoComplete='current-password' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button className='w-full' type='submit' disabled={loading}>
+        <FormField
+          control={form.control}
+          name='remember'
+          render={({ field }) => (
+            <FormItem className='!mt-3 flex items-center'>
+              <FormControl>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange as (checked: CheckedState) => void} />
+              </FormControl>
+              <FormLabel className='leading-none ml-3'>Remember me</FormLabel>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button className='w-full' type='submit' disabled={loading || googleLoading}>
           {loading && <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />}
           Login
         </Button>
-        <Button variant='outline' className='w-full' onClick={handleLoginWithGoogle}>
+        <Button
+          variant='outline'
+          className='w-full'
+          onClick={handleLoginWithGoogle}
+          type='button'
+          disabled={loading || googleLoading}>
+          {googleLoading && <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />}
           Login with Google
         </Button>
         <div className='mt-4 text-center text-sm'>

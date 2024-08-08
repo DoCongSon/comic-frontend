@@ -35,6 +35,7 @@ export const LoginBody = z
       .min(8, 'Password must be at least 8 characters.')
       .regex(/[a-zA-Z]/, 'Password must contain at least one letter.')
       .regex(/\d/, 'Password must contain at least one number.'),
+    remember: z.boolean().default(false).optional(),
   })
   .strict()
 

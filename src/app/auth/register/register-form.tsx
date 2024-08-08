@@ -15,6 +15,7 @@ import { ReloadIcon } from '@radix-ui/react-icons'
 import { toast } from 'sonner'
 import { useAppContext } from '@/app/app-provider'
 import { useRouter } from 'next/navigation'
+import { PasswordInput } from '@/components/ui/password-input'
 
 const RegisterForm = () => {
   const [loading, setLoading] = useState(false)
@@ -37,14 +38,11 @@ const RegisterForm = () => {
       setLoading(true)
       const result = await authApiRequest.register(values)
       await authApiRequest.auth(result.payload)
-      const me = await userApiRequest.me(result.payload.access.token)
+      const me = await userApiRequest.me()
       setUser(me.payload)
       router.push('/me')
       router.refresh()
       toast.success('Register successfully')
-
-      console.log('🚀 ~ me:', me.payload)
-      console.log('🚀 ~ response:', result.payload)
     } catch (error) {
       handleErrorApi({
         error,
@@ -53,9 +51,6 @@ const RegisterForm = () => {
     } finally {
       setLoading(false)
     }
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
   }
 
   return (
@@ -94,7 +89,7 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input autoComplete='current-password' type='password' {...field} />
+                <PasswordInput autoComplete='current-password' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

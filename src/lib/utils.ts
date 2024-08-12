@@ -3,6 +3,7 @@ import { UseFormSetError } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
 import { toast } from 'sonner'
 import { EntityError } from './http'
+import { levels } from './constants'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -64,4 +65,32 @@ export const renderPages = (currentPage: number, totalPages: number, maxDisplay:
     pages.push(i)
   }
   return pages
+}
+
+/**
+ * Calculates the level progress based on the given points.
+ * @param points - The number of points.
+ * @returns The level progress as a percentage.
+ */
+export const calculateLevelProgress = (points: number) => {
+  let currentLevel = levels[0]
+  let nextLevel = null
+
+  // Tìm level hiện tại và level tiếp theo
+  for (let i = 0; i < levels.length; i++) {
+    if (points >= levels[i].points) {
+      currentLevel = levels[i]
+      nextLevel = levels[i + 1] || null // Nếu không có level tiếp theo, trả về null
+    }
+  }
+
+  if (!nextLevel) {
+    // Nếu đã đạt cấp độ tối đa
+    return 100
+  }
+
+  // Tính phần trăm level hiện tại đã đạt được
+  const levelProgress = ((points - currentLevel.points) / (nextLevel.points - currentLevel.points)) * 100
+
+  return levelProgress
 }

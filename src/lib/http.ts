@@ -117,7 +117,6 @@ const request = async <Response>(
           } finally {
             localStorage.removeItem('sessionTokens')
             clientLogoutRequest = null
-            // location.href = 'login'
           }
         }
       } else {

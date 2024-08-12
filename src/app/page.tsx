@@ -15,20 +15,14 @@ export default async function Home({ searchParams }: { searchParams: { page: str
       <div className='mt-10'>
         <ComicListTitle>Truyện Hot 🔥🔥🔥</ComicListTitle>
         <ComicCarousel items={items} mode='auto-scroll' />
-        <div className='mt-10 flex items-center justify-between'>
+        <div className='mt-10'>
           <ComicListTitle>Truyện Đề Cử</ComicListTitle>
-          <Link href='#'>
-            <Button className='hidden md:flex'>Read more</Button>
-          </Link>
         </div>
         <ComicListWrap className='w-full'>
           {recommendedComics.payload.results.map((comic) => (
             <ComicItem key={comic.id} {...comic} />
           ))}
         </ComicListWrap>
-        <Link href='#'>
-          <Button className='flex md:hidden mx-auto mt-4'>Read more</Button>
-        </Link>
       </div>
     </div>
   )

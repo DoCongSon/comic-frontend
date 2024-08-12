@@ -8,9 +8,15 @@ export const UserRes = z
     avatar: z.string(),
     role: z.string(),
     verified: z.boolean(),
-    history: z.array(z.string()),
-    saved: z.array(z.string()),
-    likes: z.array(z.string()),
+    history: z.array(
+      z.object({
+        chapter_name: z.number(),
+        id: z.string(),
+        comic: z.object({ id: z.string(), name: z.string(), slug: z.string(), thumb_url: z.string() }),
+      })
+    ),
+    saved: z.array(z.object({ id: z.string(), name: z.string(), slug: z.string(), thumb_url: z.string() })),
+    likes: z.array(z.object({ id: z.string(), name: z.string(), slug: z.string(), thumb_url: z.string() })),
     progress: z.object({
       level: z.number(),
       levelName: z.string(),

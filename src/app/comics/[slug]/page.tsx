@@ -18,6 +18,7 @@ import {
   BookmarkFilledIcon,
 } from '@radix-ui/react-icons'
 import envConfig from '@/config'
+import ActionButtons from './action-buttons'
 
 type Props = {
   params: { slug: string }
@@ -104,23 +105,10 @@ const ComicDetailPage = async ({ params }: Props) => {
                 <h2 className='text-lg font-semibold'>Status</h2>
                 <Badge variant={'destructive'}>{comic.status.toUpperCase()}</Badge>
               </div>
-              <div className='flex gap-4 md:gap-6'>
-                <Button variant={'destructive'}>
-                  <ReaderIcon className='mr-2 h-4 w-4' /> Read now
-                </Button>
-                <Button variant='outline' size='icon'>
-                  {/* <HeartFilledIcon className='h-4 w-4' /> */}
-                  <HeartIcon className='h-4 w-4 text-red-500' />
-                </Button>
-                <Button variant='outline' size='icon'>
-                  {/* <BookmarkIcon className='h-4 w-4' /> */}
-                  <BookmarkFilledIcon className='h-4 w-4 text-yellow-500' />
-                </Button>
-                <Button variant='ghost' size='icon'>
-                  {/* <HeartFilledIcon className='h-4 w-4' /> */}
-                  <Share1Icon className='h-4 w-4' />
-                </Button>
-              </div>
+              <ActionButtons
+                comicId={comic.id}
+                chapterReadNowLink={`/comics/${params.slug}/chapters/${comic.chapters[0].id}`}
+              />
             </div>
           </div>
           <div className='mt-6'>

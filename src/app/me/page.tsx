@@ -2,22 +2,60 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { useAppContext } from '../app-provider'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { CheckCircle2, Gem } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { CheckCircle2, XCircleIcon, Gem } from 'lucide-react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { calculateLevelProgress } from '@/lib/utils'
+import userApiRequest from '@/apiRequests/user'
+import { toast } from 'sonner'
 
 const MePage = () => {
   const [progress, setProgress] = useState(0)
-  const { user } = useAppContext()
+  const { user, setUser } = useAppContext()
 
   useEffect(() => {
-    const timer = setTimeout(() => setProgress(66), 500)
+    ;(async () => {
+      const response = await userApiRequest.me()
+      setUser(response.payload)
+    })()
+  }, [setUser]) // fetch user data
+
+  useEffect(() => {
+    const progress = calculateLevelProgress(user?.progress.points || 0)
+    const timer = setTimeout(() => setProgress(progress), 500)
     return () => clearTimeout(timer)
-  }, [])
+  }, [user])
+
+  const handleDelete = (
+    e: MouseEvent<SVGSVGElement, globalThis.MouseEvent>,
+    { type, payload }: { type: 'history' | 'like' | 'save'; payload: string }
+  ) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (type === 'history') {
+      userApiRequest.deleteHistory(payload).then((response) => {
+        setUser(response.payload)
+        toast.success('deleted')
+      })
+    }
+    if (type === 'like') {
+      userApiRequest.deleteLike(payload).then((response) => {
+        setUser(response.payload)
+        toast.success('deleted')
+      })
+    }
+    if (type === 'save') {
+      userApiRequest.deleteSave(payload).then((response) => {
+        setUser(response.payload)
+        toast.success('deleted')
+      })
+    }
+  }
 
   return (
     <div className='max-w-[1420px] h-[calc(100vh-4rem)] mx-auto p-4 md:p-10'>
@@ -72,9 +110,89 @@ const MePage = () => {
                 <TabsTrigger value='like'>Like</TabsTrigger>
                 <TabsTrigger value='save'>Save</TabsTrigger>
               </TabsList>
-              <TabsContent value='history'>history</TabsContent>
-              <TabsContent value='like'>like</TabsContent>
-              <TabsContent value='save'>save</TabsContent>
+              <TabsContent value='history'>
+                <div className='flex flex-wrap gap-4'>
+                  {user?.history.map((item, index) => (
+                    <Link key={item.id} href={`/comics/${item.comic.slug}/chapters/${item.id}`}>
+                      <Card className='overflow-hidden'>
+                        <CardContent className='w-[150px] h-[250px] p-0 flex flex-col relative'>
+                          <Image
+                            src={item.comic.thumb_url}
+                            width={150}
+                            height={150}
+                            alt={item.comic.name}
+                            className='size-[150px]'
+                          />
+                          <div className='flex flex-col gap-2 p-2 justify-between flex-1'>
+                            <p className='text-sm leading-4'>{item.comic.name}</p>
+                            <p className='text-muted-foreground font-bold'>{item.chapter_name}</p>
+                          </div>
+                          <XCircleIcon
+                            className='absolute right-2 bottom-2 text-destructive cursor-pointer'
+                            onClick={(e) => handleDelete(e, { type: 'history', payload: item.id })}
+                          />
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </TabsContent>
+              <TabsContent value='like'>
+                {
+                  <div className='flex flex-wrap gap-4'>
+                    {user?.likes.map((item, index) => (
+                      <Link key={item.id} href={`/comics/${item.slug}/`}>
+                        <Card className='overflow-hidden'>
+                          <CardContent className='w-[150px] h-[250px] p-0 flex flex-col relative'>
+                            <Image
+                              src={item.thumb_url}
+                              width={150}
+                              height={150}
+                              alt={item.name}
+                              className='size-[150px]'
+                            />
+                            <div className='flex flex-col gap-2 p-2 justify-between flex-1'>
+                              <p className='text-sm leading-4'>{item.name}</p>
+                            </div>
+                            <XCircleIcon
+                              className='absolute right-2 bottom-2 text-destructive cursor-pointer'
+                              onClick={(e) => handleDelete(e, { type: 'like', payload: item.id })}
+                            />
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                  </div>
+                }
+              </TabsContent>
+              <TabsContent value='save'>
+                {
+                  <div className='flex flex-wrap gap-4'>
+                    {user?.saved.map((item, index) => (
+                      <Link key={item.id} href={`/comics/${item.slug}/`}>
+                        <Card className='overflow-hidden'>
+                          <CardContent className='w-[150px] h-[250px] p-0 flex flex-col relative'>
+                            <Image
+                              src={item.thumb_url}
+                              width={150}
+                              height={150}
+                              alt={item.name}
+                              className='size-[150px]'
+                            />
+                            <div className='flex flex-col gap-2 p-2 justify-between flex-1'>
+                              <p className='text-sm leading-4'>{item.name}</p>
+                            </div>
+                            <XCircleIcon
+                              className='absolute right-2 bottom-2 text-destructive cursor-pointer'
+                              onClick={(e) => handleDelete(e, { type: 'save', payload: item.id })}
+                            />
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                  </div>
+                }
+              </TabsContent>
             </Tabs>
           </div>
         </CardContent>

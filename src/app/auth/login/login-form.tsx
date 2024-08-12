@@ -19,6 +19,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import envConfig from '@/config'
 import { PasswordInput } from '@/components/ui/password-input'
 import { Checkbox, type CheckedState } from '@/components/ui/checkbox'
+import { isClient } from '@/lib/http'
 
 const LoginForm = () => {
   const [googleLoading, setGoogleLoading] = useState(false)
@@ -53,9 +54,9 @@ const LoginForm = () => {
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
     defaultValues: {
-      email: localStorage.getItem('email') || '',
-      password: localStorage.getItem('password') || '',
-      remember: !!localStorage.getItem('email'),
+      email: isClient() ? localStorage.getItem('email') || '' : '',
+      password: isClient() ? localStorage.getItem('password') || '' : '',
+      remember: isClient() ? !!localStorage.getItem('email') : false,
     },
   })
 

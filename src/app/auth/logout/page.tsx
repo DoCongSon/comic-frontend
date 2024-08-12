@@ -16,18 +16,18 @@ function LogoutLogic() {
   useEffect(() => {
     const controller = new AbortController()
     const signal = controller.signal
-    const sessionTokens: LoginResType = JSON.parse(localStorage.getItem('sessionTokens') || '{}')
-    if (sessionToken === sessionTokens.access.token) {
+    const sessionTokens: LoginResType = JSON.parse(localStorage.getItem('sessionTokens') || 'null')
+    if (sessionToken === sessionTokens?.access.token) {
       authApiRequest.logoutFromNextClientToNextServer(true, signal).then((res) => {
         setUser(null)
-        router.push(`auth/login?redirectFrom=${pathname}`)
       })
     }
+    router.push(`/auth/login?redirectFrom=${pathname}`)
     return () => {
       controller.abort()
     }
   }, [sessionToken, router, pathname, setUser])
-  return <div>page</div>
+  return null
 }
 
 export default function LogoutPage() {
